@@ -37,7 +37,8 @@ async function startBot() {
     if (!sock.authState.creds.registered) {
         console.log("\n[!] WhatsApp সার্ভারের সাথে কানেক্ট হচ্ছে...");
         await delay(3000);
-        const phoneNumber = await question('আপনার হোয়াটসঅ্যাপ নাম্বারটি দেশের কোডসহ দিন (যেমন: 91xxxxxxxxxx): ');
+        const phoneNumber = "917811014474"; // এখানে আপনার সঠিক নম্বরটি বসান
+
         let formattedNumber = phoneNumber.replace(/[^0-9]/g, '');
         const code = await sock.requestPairingCode(formattedNumber);
         console.log(`\n====================================\nআপনার পেয়ারিং কোড: ${code}\n====================================\n`);
