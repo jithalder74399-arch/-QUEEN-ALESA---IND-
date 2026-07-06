@@ -1,13 +1,3 @@
-// ১. অটো-প্যাকেজ ইনস্টলার (রেন্ডারের এরর এড়ানোর জন্য)
-const { execSync } = require('child_process');
-try {
-    require('@whiskeysockets/baileys');
-    require('pino');
-} catch (e) {
-    console.log("প্রয়োজনীয় প্যাকেজগুলো ইনস্টল হচ্ছে, দয়া করে ১-২ মিনিট অপেক্ষা করুন...");
-    execSync('npm install @whiskeysockets/baileys pino', { stdio: 'inherit' });
-}
-
 const { default: makeWASocket, useMultiFileAuthState, delay } = require("@whiskeysockets/baileys");
 const pino = require("pino");
 const os = require("os");
