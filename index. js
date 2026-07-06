@@ -1,9 +1,19 @@
+// ১. অটো-প্যাকেজ ইনস্টলার (রেন্ডারের এরর এড়ানোর জন্য)
+const { execSync } = require('child_process');
+try {
+    require('@whiskeysockets/baileys');
+    require('pino');
+} catch (e) {
+    console.log("প্রয়োজনীয় প্যাকেজগুলো ইনস্টল হচ্ছে, দয়া করে ১-২ মিনিট অপেক্ষা করুন...");
+    execSync('npm install @whiskeysockets/baileys pino', { stdio: 'inherit' });
+}
+
 const { default: makeWASocket, useMultiFileAuthState, delay } = require("@whiskeysockets/baileys");
 const pino = require("pino");
 const os = require("os");
-const http = require("http"); // রেন্ডারের ক্র্যাশ বন্ধ করার জন্য
+const http = require("http");
 
-// ১. রেন্ডারকে সচল রাখার জন্য একটি ডামি ওয়েব সার্ভার (খুবই দরকারি)
+// ২. রেন্ডার সার্ভার সচল রাখার জন্য ডামি ওয়েব সার্ভার
 const PORT = process.env.PORT || 3000;
 http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
@@ -38,15 +48,15 @@ async function startBot() {
         browser: ["Chromium", "Ubuntu", "20.04"]
     });
 
-    // ২. আপনার নাম্বারটি এখানে ফিক্সড করে দেওয়া হলো (ইনপুট এরর এড়াতে)
-    const myNumber = "917811014474"; 
+    // ৩. আপনার হোয়াটসঅ্যাপ নাম্বারটি এখানে ফিক্সড করা হলো
+    const myNumber = "918100276121"; 
 
     if (!sock.authState.creds.registered) {
         console.log("\n[!] WhatsApp সার্ভারের সাথে কানেক্ট হচ্ছে...");
-        await delay(5000); // কানেকশনের জন্য একটু সময় দেওয়া
+        await delay(8000); // প্যাকেজ ইনস্টল ও কানেকশনের জন্য একটু বাড়তি সময়
         let formattedNumber = myNumber.replace(/[^0-9]/g, '');
         const code = await sock.requestPairingCode(formattedNumber);
-        console.log(`\n====================================\nআপনার পেয়ারিং কোড: ${code}\n====================================\n`);
+        console.log(`\n====================================\n\nআপনার পেয়ারিং কোড: ${code}\n\n====================================\n`);
     }
 
     sock.ev.on('creds.update', saveCreds);
